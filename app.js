@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 // This module contains represents the express app itself. It is basically
 // responsible for the declaration of general configurations and for launching 
 // the app in the first place.
 
 // read environment variables
-=======
-// REQUIRE
->>>>>>> a08646db13706bb586611edf78d79f049d051aa8
 require("dotenv").config();
 
 var express                 = require("express"),
@@ -19,36 +15,26 @@ var express                 = require("express"),
     // require auth libs
     passport                = require("passport"),
     LocalStrategy           = require("passport-local"),
-<<<<<<< HEAD
     expressSession          = require("express-session"),
     
     // require models
-=======
     passportLocalMongoose   = require("passport-local-mongoose"),
     expressSession          = require("express-session"),
     
     // require models
     Beach                   = require("./models/beach"),
     Comment                 = require("./models/comment"),
->>>>>>> a08646db13706bb586611edf78d79f049d051aa8
     User                    = require("./models/user"),
     
     //require routers
     indexRouter             = require("./routes/index"),
     commentRouter           = require("./routes/comments"),
     beachRouter             = require("./routes/beaches"),
-    
-<<<<<<< HEAD
-    methodOverride          = require("method-override");
-    
-=======
-    methodOverride          = require("method-override"),
-    path                    = require('path'),
-    
-    seedDB                  = require("./seeds")
 
+    methodOverride          = require("method-override"),
+    path                    = require('path');
+    
 // CONFIGs
->>>>>>> a08646db13706bb586611edf78d79f049d051aa8
 var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp";
 
 mongoose.connect(url, {useNewUrlParser: true});
@@ -58,10 +44,6 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
-<<<<<<< HEAD
-=======
-// app.use(express.static(path.join(__dirname + "/starability")));
->>>>>>> a08646db13706bb586611edf78d79f049d051aa8
 app.use(expressSession({
     secret: "dontyoulookhere",
     resave: false,
@@ -89,12 +71,6 @@ app.use("/", indexRouter);
 app.use("/beaches/:id/comments", commentRouter);
 app.use("/beaches", beachRouter);
 
-<<<<<<< HEAD
-=======
-// SEED some sample data
-// seedDB();
-
->>>>>>> a08646db13706bb586611edf78d79f049d051aa8
 // CONSOLE.LOG ONCE SERVER IS ONLINE
 app.listen(process.env.PORT, process.env.IP, function(req, res) {
     console.log("Paralia is online!");

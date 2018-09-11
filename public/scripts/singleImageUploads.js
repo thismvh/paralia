@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // This module handles the frontend of uploading a single image (a.k.a. when 
 // signing up or creating a beach). It also makes sure the correct file are 
 // passed onto the backend post (or update) route
@@ -57,45 +56,3 @@ else {
     $(img).hide().fadeIn(700)
 }
 });
-=======
-    var imageInput = document.getElementById("singleInput");
-    var alreadyAdded = false;
-    var picsContainer = document.getElementById("singlePicContainer");
-    
-    imageInput.addEventListener("change", function(event) {
-        var file = event.target.files[0];
-        
-        if(!alreadyAdded) {
-            alreadyAdded = true;
-            
-            var newCol = document.createElement("div");
-                newCol.setAttribute("id", "uploadedImages");
-                newCol.setAttribute("class", "col my-2 to-be-added");
-            
-            var img = document.createElement("img");
-                img.setAttribute("id", file.name);
-                img.setAttribute("class", "big-profile-pic card-img-top");
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                     img.src = reader.result;
-                };
-                
-            reader.readAsDataURL(file);
-            newCol.appendChild(img);
-            
-            $(newCol).hide().appendTo(picsContainer).delay(200).fadeIn(700);
-            
-        } else {
-            
-            var img = event.target.nextElementSibling.children[0].children[0];
-            img.setAttribute("id", file.name);
-            
-            var readerReplace = new FileReader();
-            readerReplace.onloadend = function() {
-                 img.setAttribute("src", readerReplace.result);
-            };
-            readerReplace.readAsDataURL(file);
-            $(img).hide().fadeIn(700)
-        }
-    });
->>>>>>> a08646db13706bb586611edf78d79f049d051aa8
