@@ -1,0 +1,82 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row">
+        <form class="form-signin text-center" action="/beaches" method="POST" enctype="multipart/form-data">
+            <img class="mb-2" src="/imgs/beach-480.png" alt="" width="72" height="72">
+            <div class="col-md-12 text-center">
+                <h1 class="h3 mb-3 font-weight-normal">Add a new Beach</h1>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputName" class="float-sm-left">Name</label>
+                <input type="text" id="inputName" class="form-control" name="beach[name]" placeholder="Name" required>    
+            </div>
+            
+            <div class="form-group">
+                <label for="inputURL" class="float-sm-left">Image URL</label>
+                <input type="file" id="singleInput" class="form-control" name="image" accept="image/*" required>
+                <div id="singlePicContainer" class="row my-3">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputPrice" class="float-sm-left">Price</label>
+                <input type="number" id="inputPrice" class="form-control" name="beach[price]" placeholder="Price per night" min="0" step="0.5" required>    
+            </div>
+            
+            <div class="form-group">
+                <label for="inputDescription" class="float-sm-left">Description</label>
+                <textarea id="inputDescription" class="form-control comment" name="beach[description]" placeholder="Description" required></textarea>    
+            </div>
+            
+            <div class="form-group">
+                <label for="location" class="float-sm-left">Location</label>
+                <input class="form-control" type="text" name="beach[location]" id="location" placeholder="Yosemite National Park, CA">
+            </div>
+            
+            <div>
+                <button class="btn-lg btn-primary btn-block btn-circle">Add <i class="fas fa-plus-circle"></i></button>
+            </div>
+            <a href="/beaches" class="float-sm-left">Go back</a>
+        </form>
+    </div>
+</div>
+
+<script>
+    // var imageInput = document.getElementById("inputURL");
+    // var alreadyAdded = false;
+    // var picsContainer = document.getElementById("picsContainer");
+    
+    // imageInput.addEventListener("change", function(event) {
+    //     (function(file) {
+    //         var file = event.target.files[0];
+            
+    //         var newCol = document.createElement("div");
+    //             newCol.setAttribute("id", "uploadedImages");
+    //             newCol.setAttribute("class", "col my-2 to-be-added");
+            
+    //         var img = document.createElement("img");
+    //             img.setAttribute("id", file.name)
+    //             img.setAttribute("class", "big-profile-pic card-img-top");
+    //             var reader = new FileReader();
+    //             reader.onloadend = function() {
+    //                  img.src = reader.result;
+    //             }
+                
+    //         reader.readAsDataURL(file);
+    //         newCol.appendChild(img);
+            
+    //         // var deleteButtonDiv = document.createElement("div");
+    //         //     deleteButtonDiv.setAttribute("class", "card-img-overlay d-flex flex-column justify-content-center");
+            
+    //         // var deleteButton = document.createElement("i");
+    //         //     deleteButton.setAttribute("class", "fas fa-trash-alt");
+                
+    //         // deleteButtonDiv.appendChild(deleteButton);
+    //         // newCol.appendChild(deleteButtonDiv);
+    //         picsContainer.appendChild(newCol);
+    //     })();
+    // });
+</script>
+
+<% include ../partials/footer %>

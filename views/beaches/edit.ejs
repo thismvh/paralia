@@ -1,0 +1,63 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        
+        <form id="form" class="form-signin text-center" action="/beaches/<%= beach._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <img class="mb-2" src="/imgs/beach-480.png" alt="" width="72" height="72">
+            <div class="col-md-12 text-center">
+                <!--<h1 class="h3 mb-3 font-weight-normal">Edit <%= beach.name %></h1>-->
+                <h1 class="h3 mb-3 font-weight-normal">
+                    Edit
+                    <span class="d-block mt-2">
+                        <strong>
+                            <%= beach.name %>
+                        </strong>
+                    </span>
+                </h1>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputName" class="float-left">Name</label>
+                <input type="text" id="inputName" class="form-control" name="beach[name]" value="<%= beach.name %>" required>    
+            </div>
+            
+            <div class="form-group">
+                <label for="inputURL" class="float-left">Images</label>
+                <input type="file" id="picURL" class="form-control" name="image" accept="image/*" multiple>
+                <div id="picsContainer" class="row my-3">
+                    <% beach.pics.forEach(function(beachPic) { %>
+                        <div id="uploadedImages" class="col my-2">
+                            <img id="<%= beachPic.id %>" class="big-profile-pic card-img-top" src="<%= beachPic.url %>">
+                            <div class="card-img-overlay d-flex flex-column justify-content-center">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputPrice" class="float-left">Price</label>
+                <input type="number" id="inputPrice" class="form-control" name="beach[price]" value="<%= beach.price %>" min="0" step="0.5" required>    
+            </div>
+            
+            <div class="form-group">
+                <label for="inputDescription" class="float-left">Description</label>
+                <textarea id="inputDescription" class="form-control comment" name="beach[description]" required><%= beach.description %></textarea>    
+            </div>
+            
+            <div class="form-group">
+                <label for="location" class="float-left">Location</label>
+                <input class="form-control" type="text" name="location" id="location" value="<%= beach.location %>">
+            </div>
+            
+            <div>
+                <button class="btn-lg btn-primary btn-block btn-circle">Save Changes <i class="fas fa-save"></i></button>
+            </div>
+            <a href="/beaches" class="float-sm-left">Go back</a>
+        </form>
+    </div>
+</div>
+
+<% include ../partials/footer %>

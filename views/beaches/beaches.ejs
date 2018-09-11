@@ -1,0 +1,86 @@
+<% include ../partials/home-header %>
+
+<section id="hero">
+    <div class="container">
+        <div class="jumbotron">
+            <div id="header">
+                <h1 id="brand-name">Paralia</h1>
+                <p class="subtitle">Your Beach Review Portal</p>
+                <p class="mt-4"><a href="/beaches/new" class="btn btn-lg btn-primary d-block btn-circle">Add new Beach</a></p>
+                <hr id="scroll-checkpoint">
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr>
+
+<div class="container">
+        <div class="row text-center">
+            <% beaches.forEach(function(beach) { %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4" >
+                    <div class="card">
+                      <a href="/beaches/<%= beach._id%>"><img class="card-img-top small-card-img-beach" src="<%= beach.pics[0].url %>" alt="<% beach.name %>"></a>
+                      <div class="card-body">
+                        <h5 class="card-title"><%= beach.name %></h5>
+                        <a class="btn btn-link" href="/beaches/<%= beach._id%>">More Info</a>
+                      </div>
+                    </div>        
+                </div>
+            <% })%>
+        </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(window).resize(function() {
+            var images = $(".small-card-img-beach");
+            if($(window).width() < 550 && !images.hasClass("xs-viewport")) {
+                images.addClass("xs-viewport");
+                $("#top-navbar").attr("id", "top-navbar-inverse");
+            }
+            
+            if($(window).width() > 549 && images.hasClass("xs-viewport")) {
+                images.removeClass("xs-viewport");
+                $("#top-navbar-inverse").attr("id", "top-navbar");
+            }
+        })
+    
+        var scroll_start = 0;
+        var startchange = $('#scroll-checkpoint');
+        var offset = startchange.offset();
+        if(startchange.length){
+          $(document).scroll(function(){
+            scroll_start = $(this).scrollTop();
+
+            if(scroll_start > offset.top){
+              $("#top-navbar").attr("id", "top-navbar-inverse");
+            } else if($(window).width() > 549) {
+              $("#top-navbar-inverse").attr("id", "top-navbar");
+            }
+          })
+        }
+        
+        var error = "<%- error %>";
+        var success = "<%- success %>"; 
+        
+        $(window).on("load", function() {
+            if(error && error.length > 0) {
+                $("#dangerModal").modal("show");
+            } else if(success && success.length > 0) {
+                $("#successModal").modal("show");
+            }
+        })
+        
+        // $(".navbar-toggler").on("click", function(event) {
+        //   if($("#top-navbar-inverse").length) {
+        //       $("#top-navbar-inverse").attr("id", "top-navbar");
+        //   } else if ($("#top-navbar").length) {
+        //       $("#top-navbar").attr("id", "top-navbar-inverse");
+        //   }
+          
+        // })
+      })
+</script>
+
+<% include ../partials/footer%>

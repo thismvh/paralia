@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Paralia - Your Beach Review Portal</title>
+        
+        <link rel="icon" type="image/png" href="/imgs/beach-480.png">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/starability/2.4.2/starability-css/starability-basic.css"/>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    </head>
+    
+    <body>
+        <nav id="top-navbar" class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+          <a class="navbar-brand" href="/"><img id="logo" src="/imgs/beach-480.png"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li id="nav-home" class="nav-item <%= typeof page !== 'undefined' && page === 'beaches' ? 'active' : '' %>">
+                    <a class="nav-link" href="/beaches">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <% if(!currentUser) { %>
+                    <li><button class="btn btn-light mx-sm-3 btn-circle login" data-toggle="modal" data-target="#loginModal">Log In</button></li>
+                    <li><button class="btn btn-light btn-circle register" data-toggle="modal" data-target="#registerModal">Sign Up</button></li>
+                <% } else { %>
+                    <li><a class="nav-link mx-sm-3 btn-circle" href="/users/<%= currentUser._id %>"><img class="xsmall-profile-pic" src="<%= currentUser.pics[0].url %>"></a></li>
+                    <li><a class="btn btn-light mt-1 btn-circle logout" href="/logout">Log Out</a></li>
+                        
+                <% } %>
+            </ul>
+          </div>
+        </nav>
+        
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-signin text-center" action="/login" method="POST">
+                            <img class="mb-1" src="/imgs/beach-480.png" alt="" width="36" height="36">
+                            <div class="col-md-12 text-center">
+                                <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="inputUsername" name="username" class="form-control mb-4" placeholder="Username" required autofocus>
+                                <input type="password" id="inputPassword" name="password" class="form-control mb-4" placeholder="Password" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-lg btn-primary btn-block btn-circle" type="submit">Log In</button>
+                            </div>
+                            <div class="px-3 text-center">
+                                <a href="/forgot">Forgot Password?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-signin text-center" action="/register" method="POST" enctype="multipart/form-data">
+                            <img class="mb-1" src="/imgs/beach-480.png" alt="" width="36" height="36">
+                            <div class="col-md-12 text-center">
+                                <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="inputEmail" class="form-control" name="user[email]" placeholder="Email" required>    
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" id="inputFirstName" class="form-control" name="user[firstName]" placeholder="First Name" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="text" id="inputLastName" class="form-control" name="user[lastName]" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" id="singleInput" class="form-control" name="picURL" accept="image/*" required>
+                                <div id="singlePicContainer" class="row my-3">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="adminCode" class="form-control" name="user[adminCode]" placeholder="Secret Admin Code">
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-lg btn-primary btn-block btn-circle" type="submit">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade hide" id="dangerModal" tabindex="-1" role="dialog" aria-labelledby="dangerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title"><%= error %></p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="modal fade hide" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title"><%= success %></p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>

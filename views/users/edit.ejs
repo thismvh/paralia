@@ -1,0 +1,39 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        
+         <form id="form" class="form-signin text-center" action="/users/<%= user.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <img class="mb-4" src="/imgs/beach-480.png" alt="" width="72" height="72">
+            <div class="col-md-12 text-center">
+                <h1 class="h3 mb-3 font-weight-normal">Edit Your Profile</h1>
+            </div>
+            
+            <div class="form-group">
+                <label for="picURL" class="float-left">Profile Pics</label>
+                <input type="file" id="picURL" class="form-control" name="pic" accept="image/*" multiple>
+                <div id="picsContainer" class="row my-3">
+                    <% user.pics.forEach(function(userPic) { %>
+                        <div id="uploadedImages" class="col my-2">
+                            <img id="<%= userPic.id %>" class="big-profile-pic card-img-top" src="<%= userPic.url %>">
+                            <div class="card-img-overlay d-flex flex-column justify-content-center">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="aboutMe" class="float-left">About Me</label>
+                <textarea id="aboutMe" class="form-control comment" name="description"><%= user.description %></textarea>    
+            </div>
+            
+            <div>
+                <button class="btn-lg btn-primary btn-block btn-circle">Save changes <i class="fas fa-save"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<% include ../partials/footer %>
